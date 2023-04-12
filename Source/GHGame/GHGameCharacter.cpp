@@ -11,6 +11,7 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
+#include "HealthComponent.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
 
@@ -57,6 +58,11 @@ AGHGameCharacter::AGHGameCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+
+	HealthComponent->MaxHealth = 100.f;
+	HealthComponent->Health = 80.f;
 }
 
 void AGHGameCharacter::BeginPlay()
