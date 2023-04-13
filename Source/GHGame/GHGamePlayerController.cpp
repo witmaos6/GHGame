@@ -58,6 +58,7 @@ void AGHGamePlayerController::PlayerTick(float DeltaTime)
 	if(bAKeyDown)
 	{
 		ShowSkillWidget();
+		Guage += (25.f * DeltaTime);
 	}
 	else
 	{
@@ -166,6 +167,8 @@ void AGHGamePlayerController::AKeyReleased()
 	bAKeyDown = false;
 
 	GetCharacter()->GetCharacterMovement()->MaxWalkSpeed -= 500.f;
+
+	Guage = 0.f;
 }
 
 void AGHGamePlayerController::SKeyPressed()
