@@ -5,8 +5,10 @@
 #include "Runtime/Engine/Classes/Components/DecalComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "GHGameCharacter.h"
+#include "Blueprint/UserWidget.h"
 #include "Engine/World.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 AGHGamePlayerController::AGHGamePlayerController()
 {
@@ -16,6 +18,31 @@ AGHGamePlayerController::AGHGamePlayerController()
 	bAKeyDown = false;
 	bSKeyDown = false;
 	bDKeyDown = false;
+
+	bVisibleSkillWidget = false;
+	MaxGuage = 10.f;
+	Guage = 0.f;
+}
+
+void AGHGamePlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (WStatOverlay)
+	{
+		StatOverlay = CreateWidget<UUserWidget>(this, WStatOverlay);
+
+		StatOverlay->AddToViewport();
+		StatOverlay->SetVisibility(ESlateVisibility::Visible);
+	}
+
+	if (WSkillWidget)
+	{
+		SkillWidget = CreateWidget<UUserWidget>(this, WSkillWidget);
+
+		SkillWidget->AddToViewport();
+		SkillWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void AGHGamePlayerController::PlayerTick(float DeltaTime)
@@ -26,6 +53,15 @@ void AGHGamePlayerController::PlayerTick(float DeltaTime)
 	if (bMoveToMouseCursor)
 	{
 		MoveToMouseCursor();
+	}
+
+	if(bAKeyDown)
+	{
+		ShowSkillWidget();
+	}
+	else
+	{
+		RemoveSkillWidget();
 	}
 }
 
@@ -150,4 +186,20 @@ void AGHGamePlayerController::DKeyPressed()
 void AGHGamePlayerController::DKeyReleased()
 {
 	bDKeyDown = false;
+}
+
+void AGHGamePlayerController::ShowSkillWidget()
+{
+	if(SkillWidget)
+	{
+		SkillWidget->SetVisibility(ESlateVisibility::Visible);
+	}
+}
+
+void AGHGamePlayerController::RemoveSkillWidget()
+{
+	if(SkillWidget)
+	{
+		SkillWidget->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

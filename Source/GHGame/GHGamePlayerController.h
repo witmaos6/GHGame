@@ -27,6 +27,30 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Key")
 	bool bDKeyDown;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Guage")
+	float MaxGuage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Guage")
+	float Guage;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Guage")
+	bool bVisibleSkillWidget;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<UUserWidget> WStatOverlay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* StatOverlay;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	TSubclassOf<UUserWidget> WSkillWidget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
+	UUserWidget* SkillWidget;
+
+protected:
+	virtual void BeginPlay() override;
 	// Begin PlayerController interface
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
@@ -56,6 +80,8 @@ protected:
 	void DKeyPressed();
 
 	void DKeyReleased();
+
+	void ShowSkillWidget();
+
+	void RemoveSkillWidget();
 };
-
-
