@@ -33,8 +33,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Guage")
 	float Guage;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Guage")
-	bool bVisibleSkillWidget;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
+	float Speed;
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
