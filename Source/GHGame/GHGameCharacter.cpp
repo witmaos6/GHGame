@@ -12,6 +12,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "HealthComponent.h"
+#include "Skill.h"
 #include "Materials/Material.h"
 #include "Engine/World.h"
 
@@ -63,6 +64,8 @@ AGHGameCharacter::AGHGameCharacter()
 
 	HealthComponent->MaxHealth = 100.f;
 	HealthComponent->Health = 80.f;
+
+	Skill = CreateDefaultSubobject<ASkill>(TEXT("Skill"));
 }
 
 void AGHGameCharacter::BeginPlay()
@@ -102,5 +105,10 @@ void AGHGameCharacter::Tick(float DeltaSeconds)
 			CursorToWorld->SetWorldLocation(TraceHitResult.Location);
 			CursorToWorld->SetWorldRotation(CursorR);
 		}
+	}
+
+	if(Skill)
+	{
+		Skill->HoldingSkill(PlayerController->bAKeyDown, DeltaSeconds, this);
 	}
 }

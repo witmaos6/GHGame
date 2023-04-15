@@ -18,10 +18,6 @@ AGHGamePlayerController::AGHGamePlayerController()
 	bAKeyDown = false;
 	bSKeyDown = false;
 	bDKeyDown = false;
-
-	Speed = 600.f;
-	MaxGuage = 10.f;
-	Guage = 0.f;
 }
 
 void AGHGamePlayerController::BeginPlay()
@@ -53,20 +49,6 @@ void AGHGamePlayerController::PlayerTick(float DeltaTime)
 	if (bMoveToMouseCursor)
 	{
 		MoveToMouseCursor();
-	}
-
-	if(bAKeyDown && MaxGuage >= Guage)
-	{
-		GetCharacter()->GetCharacterMovement()->MaxWalkSpeed = Speed + 500.f;
-
-		ShowSkillWidget();
-		Guage += (25.f * DeltaTime);
-	}
-	else
-	{
-		GetCharacter()->GetCharacterMovement()->MaxWalkSpeed = Speed - 500.f;
-
-		RemoveSkillWidget();
 	}
 }
 
@@ -167,8 +149,6 @@ void AGHGamePlayerController::AKeyPressed()
 void AGHGamePlayerController::AKeyReleased()
 {
 	bAKeyDown = false;
-
-	Guage = 0.f;
 }
 
 void AGHGamePlayerController::SKeyPressed()
@@ -189,20 +169,4 @@ void AGHGamePlayerController::DKeyPressed()
 void AGHGamePlayerController::DKeyReleased()
 {
 	bDKeyDown = false;
-}
-
-void AGHGamePlayerController::ShowSkillWidget()
-{
-	if(SkillWidget)
-	{
-		SkillWidget->SetVisibility(ESlateVisibility::Visible);
-	}
-}
-
-void AGHGamePlayerController::RemoveSkillWidget()
-{
-	if(SkillWidget)
-	{
-		SkillWidget->SetVisibility(ESlateVisibility::Hidden);
-	}
 }

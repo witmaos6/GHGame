@@ -18,6 +18,7 @@ protected:
 	/** True if the controlled character should navigate to the mouse cursor. */
 	uint32 bMoveToMouseCursor : 1;
 
+public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Key")
 	bool bAKeyDown;
 
@@ -27,16 +28,6 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Key")
 	bool bDKeyDown;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Guage")
-	float MaxGuage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Guage")
-	float Guage;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character")
-	float Speed;
-
-public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TSubclassOf<UUserWidget> WStatOverlay;
 
@@ -80,8 +71,4 @@ protected:
 	void DKeyPressed();
 
 	void DKeyReleased();
-
-	void ShowSkillWidget();
-
-	void RemoveSkillWidget();
 };
