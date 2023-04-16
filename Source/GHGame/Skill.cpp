@@ -6,6 +6,7 @@
 #include "GHGameCharacter.h"
 #include "GHGamePlayerController.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/DecalComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
@@ -31,7 +32,7 @@ void ASkill::Tick(float DeltaTime)
 
 }
 
-void ASkill::HoldingSkill(bool KeyDown, float DeltaSecond, class AGHGameCharacter* Character)
+void ASkill::HoldingSkill(bool KeyDown, float DeltaSecond, AGHGameCharacter* Character)
 {
 	AGHGamePlayerController* PlayerController = Cast<AGHGamePlayerController>(Character->GetController());
 
@@ -49,6 +50,33 @@ void ASkill::HoldingSkill(bool KeyDown, float DeltaSecond, class AGHGameCharacte
 	{
 		Character->GetCharacterMovement()->MaxWalkSpeed = 600.f;
 
+		Gage = 0;
+		if (PlayerController)
+		{
+			PlayerController->SkillWidget->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
+}
+
+void ASkill::CastingSkill(bool KeyDown, float DeltaSecond, AGHGameCharacter* Character)
+{
+	AGHGamePlayerController* PlayerController = Cast<AGHGamePlayerController>(Character->GetController());
+
+	if(KeyDown && MaxGage >= Gage)
+	{
+		Gage += Rate * DeltaSecond;
+		if (PlayerController)
+		{
+			PlayerController->SkillWidget->SetVisibility(ESlateVisibility::Visible);
+		}
+		if(MaxGage <= Gage)
+		{
+			FVector MoveToLocation = Character->GetCursorToWorld()->GetComponentLocation();
+			Character->SetActorLocation(MoveToLocation);
+		}
+	}
+	else
+	{
 		Gage = 0;
 		if (PlayerController)
 		{

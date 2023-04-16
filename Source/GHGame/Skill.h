@@ -32,4 +32,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void HoldingSkill(bool KeyDown, float DeltaSecond, class AGHGameCharacter* Character);
+
+	void CastingSkill(bool KeyDown, float DeltaSecond, AGHGameCharacter* Character);
 };

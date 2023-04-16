@@ -107,8 +107,12 @@ void AGHGameCharacter::Tick(float DeltaSeconds)
 		}
 	}
 
-	if(Skill)
+	if(Skill && PlayerController->bAKeyDown)
 	{
 		Skill->HoldingSkill(PlayerController->bAKeyDown, DeltaSeconds, this);
+	}
+	if(Skill && PlayerController->bSKeyDown)
+	{
+		Skill->CastingSkill(PlayerController->bSKeyDown, DeltaSeconds, this);
 	}
 }
