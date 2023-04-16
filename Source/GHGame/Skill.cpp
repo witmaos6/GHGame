@@ -58,25 +58,19 @@ void ASkill::HoldingSkill(bool KeyDown, float DeltaSecond, AGHGameCharacter* Cha
 	}
 }
 
-void ASkill::CastingSkill(bool KeyDown, float DeltaSecond, AGHGameCharacter* Character)
+void ASkill::CastingSkill(float DeltaSecond, AGHGameCharacter* Character)
 {
 	AGHGamePlayerController* PlayerController = Cast<AGHGamePlayerController>(Character->GetController());
 
-	if(KeyDown && MaxGage >= Gage)
+	Gage += Rate * DeltaSecond;
+	if (PlayerController)
 	{
-		Gage += Rate * DeltaSecond;
-		if (PlayerController)
-		{
-			PlayerController->SkillWidget->SetVisibility(ESlateVisibility::Visible);
-		}
-		if(MaxGage <= Gage)
-		{
-			FVector MoveToLocation = Character->GetCursorToWorld()->GetComponentLocation();
-			Character->SetActorLocation(MoveToLocation);
-		}
+		PlayerController->SkillWidget->SetVisibility(ESlateVisibility::Visible);
 	}
-	else
+	if(MaxGage <= Gage)
 	{
+		FVector MoveToLocation = Character->GetCursorToWorld()->GetComponentLocation();
+		Character->SetActorLocation(MoveToLocation);
 		Gage = 0;
 		if (PlayerController)
 		{
